@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root attribute1 = "A1"       
+      attribute2   =    "A2" >
+  <title>Test</title>
+  <elements>
+    <element_name1 attribute_1 = "E1" attribute_2 = "E2" >Content 1</element_name1>
+    <element_name2 attribute_1="E 3" attribute_2 = "E  4" >Content    2</element_name2>
+  </elements>
+</root>
