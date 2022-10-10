@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="XmlReaderWindow" parent="GtkApplicationWindow">
+        <property name="default-width">600</property>
+        <property name="default-height">400</property>
+        <child type="titlebar">
+            <object class="GtkHeaderBar" id="header_bar">
+                <child type="end">
+                    <object class="GtkMenuButton">
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="menu-model">primary_menu</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkBox" id="vbox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                    <object class="GtkScrolledWindow" id="scrolledwindow">
+                        <property name="has-frame">1</property>
+                        <property name="hexpand">1</property>
+                        <property name="vexpand">1</property>
+                        <child>
+                            <object class="GtkTextView" id="textview">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="buffer">textbuffer</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel" id="lblStatus">
+                        <property name="label">&quot;...&quot;</property>
+                        <attributes>
+                            <attribute name="weight" value="bold" />
+                        </attributes>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+    <menu id="primary_menu">
+        <section>
+            <item>
+                <attribute name="label" translatable="yes">_Open</attribute>
+                <attribute name="action">app.openFile</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">_Save</attribute>
+                <attribute name="action">app.saveFile</attribute>
+            </item>
+            <item>
+                <attribute name="label" translatable="yes">_About</attribute>
+                <attribute name="action">app.about</attribute>
+            </item>
+        </section>
+    </menu>
+    <object class="GtkTextBuffer" id="textbuffer">
+        <property name="text" translatable="yes">Buffer</property>
+    </object>
+</interface>
