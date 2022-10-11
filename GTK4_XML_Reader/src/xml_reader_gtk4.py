@@ -4,13 +4,16 @@
 '''
 
 import gi
+import sys
 
 gi.require_version("Gtk", "4.0")
 
 from gi.repository import Gtk, Gio
 from xml_reader import XmlReader
 
+SVG_TAGS = ["rect", "circle", "ellipse", "path", "text"]
 path = "./example.xml"
+
 
 @Gtk.Template(filename='xml_reader_gtk4.ui')
 class XmlReaderWindow(Gtk.ApplicationWindow):
@@ -45,8 +48,8 @@ class XmlReaderApplication(Gtk.Application):
         about.present()
 
     def on_open_file_action(self, widget, _):
-        fchooser = OpenXml(self.props.active_window)
-        btn_select = fchooser.get_widget_for_response(response_id=Gtk.ResponseType.OK)
+        fch = OpenXml(self.props.active_window)
+        btn_select = fch.get_widget_for_response(response_id=Gtk.ResponseType.OK)
         btn_select.connect('clicked', self.update)
 
     def update(self, widget):
@@ -58,10 +61,20 @@ class XmlReaderApplication(Gtk.Application):
         buffer = ""
         f = path.strip().lower()
         if f.endswith(".svg"):
-            xml = XmlReader(path, ['rect', 'path', 'ellipse'])
+            xml = XmlReader(path, SVG_TAGS)
             data = xml.prepare()
             for i in data:
-                buffer += "{0} : {1}\n".format(i['tag'], i['style'])
+                fill = ""
+                stroke = ""
+                style = i['style'].split(';')
+                for s in style:
+                    if s.startswith("fill:"):
+                        fill = s
+                    if s.startswith("stroke:"):
+                        stroke = s
+                buffer += "{0}\t{1}\t{2}\t{3}\n".format(i['tag'],
+                    i['id'].replace('>','').replace('<',''),
+                    fill, stroke) 
         if f.endswith(".xml"):
             xml = XmlReader(path)
             data = xml.prepare()
@@ -123,10 +136,35 @@ class AboutDialog(Gtk.AboutDialog):
         self.set_transient_for(parent)            
 
 
+def terminal(path):
+    
+    def view(data):
+        for i in data:
+            print(i)
+
+    if path.endswith(".xml"):
+        xml = XmlReader(path)
+        view(xml.prepare())
+    else:
+        svg = XmlReader(path, SVG_TAGS)
+        view(svg.prepare())
+
+
 def gui():
+    print("Open display ...")
     app = XmlReaderApplication()
     return app.run()
 
 
+def main(argv):
+    print ("Console display => python3 xml_reader_gtk4.py [FILE]")
+    if (len(argv) == 1):
+        if argv[-1].endswith(".xml") or argv[-1].endswith(".svg"):
+            terminal(argv[-1])
+    else:
+        gui()
+    print("Finished.")
+
+
 if __name__ == '__main__':
-    gui()
+    main(sys.argv[1:])

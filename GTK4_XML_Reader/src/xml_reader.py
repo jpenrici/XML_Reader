@@ -7,6 +7,7 @@ import os
 import sys
 import time
 
+
 class XmlReader():
 
     def __init__(self, path, tags=[]):
@@ -123,8 +124,9 @@ class XmlReader():
 
         return data
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
+    
     def view(data):
         for i in data:
             print(i)

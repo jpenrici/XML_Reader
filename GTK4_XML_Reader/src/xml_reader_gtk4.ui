@@ -35,7 +35,7 @@
                 </child>
                 <child>
                     <object class="GtkLabel" id="lblStatus">
-                        <property name="label">&quot;...&quot;</property>
+                        <property name="label">Open an XML file from the menu to start.</property>
                         <attributes>
                             <attribute name="weight" value="bold" />
                         </attributes>
@@ -50,10 +50,10 @@
                 <attribute name="label" translatable="yes">_Open</attribute>
                 <attribute name="action">app.openFile</attribute>
             </item>
-            <item>
+<!--        <item>
                 <attribute name="label" translatable="yes">_Save</attribute>
                 <attribute name="action">app.saveFile</attribute>
-            </item>
+            </item> -->
             <item>
                 <attribute name="label" translatable="yes">_About</attribute>
                 <attribute name="action">app.about</attribute>
@@ -61,6 +61,6 @@
         </section>
     </menu>
     <object class="GtkTextBuffer" id="textbuffer">
-        <property name="text" translatable="yes">Buffer</property>
+        <property name="text" translatable="yes"></property>
     </object>
 </interface>
